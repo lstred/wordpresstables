@@ -91,7 +91,6 @@ if ( ! defined( 'ABSPATH' ) ) { exit; }
          TEMPLATE: Table Panel (cloned by JS)
     ══════════════════════════════════════════════════════════ -->
     <template id="tum-panel-template">
-        <div class="tum-table-panel" role="tabpanel">
 
             <!-- Panel header -->
             <div class="tum-panel-header">
@@ -293,7 +292,6 @@ if ( ! defined( 'ABSPATH' ) ) { exit; }
                 </div>
             </div>
 
-        </div>
     </template>
 
 </div><!-- /#tum-app -->

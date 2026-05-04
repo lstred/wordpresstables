@@ -152,11 +152,11 @@
     border: 1px solid #e2e8f0;
     border-radius: 0 0 var(--tum-radius) var(--tum-radius);
 }
-.tum-table-panel {
+#tum-panels-container > .tum-table-panel {
     padding: 24px;
     display: none;
 }
-.tum-table-panel.active { display: block; }
+#tum-panels-container > .tum-table-panel.active { display: block; }
 
 /* ── Panel header ─────────────────────────────────────────── */
 .tum-panel-header {
