@@ -86,7 +86,10 @@ class TUM_Table_Manager {
 
         $saved = TUM_Database::save_table_data( $table_id, $headers, $rows, get_current_user_id() );
         if ( ! $saved ) {
-            return new WP_Error( 'db_error', __( 'Could not save table data.', 'table-upload-manager' ) );
+            return new WP_Error(
+                'db_error',
+                __( 'Upload failed — the data could not be saved to the database. Please try again. If the issue persists, ask your administrator to check the server error log.', 'table-upload-manager' )
+            );
         }
 
         return [

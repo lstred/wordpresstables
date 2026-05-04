@@ -202,15 +202,31 @@ class TUM_Database {
     // ── Table Data ────────────────────────────────────────────────────────────
     public static function save_table_data( int $table_id, array $headers, array $rows, int $uploader_id ): bool {
         global $wpdb;
-        // Remove existing data record
+
+        // Encode to JSON — use JSON_UNESCAPED_UNICODE for compact, valid output.
+        $headers_json = wp_json_encode( $headers, JSON_UNESCAPED_UNICODE );
+        $rows_json    = wp_json_encode( $rows,    JSON_UNESCAPED_UNICODE );
+
+        if ( false === $headers_json || false === $rows_json ) {
+            error_log(
+                sprintf(
+                    'TUM: JSON encoding failed for table_id=%d. Error: %s',
+                    $table_id,
+                    json_last_error_msg()
+                )
+            );
+            return false;
+        }
+
+        // Replace any existing data row for this table.
         $wpdb->delete( self::data_table(), [ 'table_id' => $table_id ], [ '%d' ] );
 
         $result = $wpdb->insert(
             self::data_table(),
             [
                 'table_id'     => $table_id,
-                'headers'      => wp_json_encode( $headers ),
-                'rows'         => wp_json_encode( $rows ),
+                'headers'      => $headers_json,
+                'rows'         => $rows_json,
                 'row_count'    => count( $rows ),
                 'column_count' => count( $headers ),
                 'uploaded_at'  => current_time( 'mysql', 1 ),
@@ -219,10 +235,27 @@ class TUM_Database {
             [ '%d', '%s', '%s', '%d', '%d', '%s', '%d' ]
         );
 
-        // Touch parent table
-        $wpdb->update( self::tables_table(), [ 'updated_at' => current_time( 'mysql', 1 ) ], [ 'id' => $table_id ], [ '%s' ], [ '%d' ] );
+        if ( false === $result ) {
+            error_log(
+                sprintf(
+                    'TUM: DB insert failed for table_id=%d. MySQL error: %s',
+                    $table_id,
+                    $wpdb->last_error
+                )
+            );
+            return false;
+        }
 
-        return $result !== false;
+        // Refresh the parent table timestamp.
+        $wpdb->update(
+            self::tables_table(),
+            [ 'updated_at' => current_time( 'mysql', 1 ) ],
+            [ 'id'         => $table_id ],
+            [ '%s' ],
+            [ '%d' ]
+        );
+
+        return true;
     }
 
     public static function get_table_data( int $table_id ): ?object {

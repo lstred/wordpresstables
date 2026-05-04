@@ -17,7 +17,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 // ─── Plugin Constants ────────────────────────────────────────────────────────
-define( 'TUM_VERSION',          '1.0.1' );
+define( 'TUM_VERSION',          '1.0.2' );
 define( 'TUM_PLUGIN_DIR',       plugin_dir_path( __FILE__ ) );
 define( 'TUM_PLUGIN_URL',       plugin_dir_url( __FILE__ ) );
 define( 'TUM_PLUGIN_BASENAME',  plugin_basename( __FILE__ ) );
@@ -46,6 +46,14 @@ register_deactivation_hook( __FILE__, [ 'TUM_Activator', 'deactivate' ] );
 
 // ─── Bootstrap ────────────────────────────────────────────────────────────────
 function tum_init() {
+    // Auto-create / upgrade DB tables when the stored version does not match.
+    // This handles installs where the activation hook did not fire (e.g. FTP
+    // deployment, migration, server-side duplication).
+    if ( get_option( 'tum_db_version' ) !== TUM_DB_VERSION ) {
+        TUM_Database::create_tables();
+        update_option( 'tum_db_version', TUM_DB_VERSION );
+    }
+
     TUM_Ajax_Handler::get_instance();
 
     if ( is_admin() ) {

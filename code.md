@@ -255,6 +255,19 @@ Place on any page or post. Logged-in users see all active tables in a tabbed int
 
 ## Changelog
 
+### 1.0.2 — Upload Save Fix
+- **Fix:** Auto-create / upgrade database tables on `plugins_loaded` when `tum_db_version` option is missing or stale — handles FTP deployments where `register_activation_hook` never fires.
+- **Fix:** `save_table_data()` now guards `wp_json_encode()` return values; a `false` return (encoding failure) is caught and logged before attempting the INSERT.
+- **Fix:** `sanitize_cell_value()` now strips 4-byte UTF-8 characters (emoji, rare CJK extensions) that MySQL's legacy `utf8` charset cannot store, preventing silent INSERT failures on shared hosting.
+- **Fix:** Added `error_log()` calls with full MySQL error and JSON error details so server administrators can diagnose issues in the PHP error log.
+- **Improvement:** Upload failure message is now descriptive and actionable rather than a generic string.
+
+### 1.0.1 — Panel Visibility Fix
+- **Fix:** Removed `<div class="tum-table-panel">` wrapper from inside the `<template>` element — CSS was hiding all panel content because the cloned inner div never received the `.active` class.
+- **Fix:** Scoped panel CSS selectors with child combinator (`#tum-panels-container > .tum-table-panel`) to prevent unintended hiding of nested elements.
+- **Fix:** Upload zone now auto-opens when a table has no data and the current user can edit it.
+- Version bump to bust browser/CDN caches.
+
 ### 1.0.0 — Initial Release
 - CSV, TSV, XLSX upload and parsing
 - Tabbed table navigation on frontend

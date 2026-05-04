@@ -99,8 +99,19 @@ class TUM_Security {
      * Sanitize an array of strings (table cell content).
      */
     public static function sanitize_cell_value( string $value ): string {
-        // Strip tags, trim, limit length
-        return mb_substr( wp_strip_all_tags( $value ), 0, 1000 );
+        $value = wp_strip_all_tags( $value );
+
+        // Remove 4-byte UTF-8 characters (emoji, rare CJK extensions, etc.).
+        // MySQL's legacy `utf8` charset (3-byte only) silently rejects them,
+        // causing the entire INSERT to fail. utf8mb4 hosts are unaffected.
+        $value = preg_replace( '/[\xF0-\xF7][\x80-\xBF]{3}/', '', $value );
+
+        // Ensure the result is valid UTF-8 before sending to JSON / MySQL.
+        if ( ! mb_check_encoding( $value, 'UTF-8' ) ) {
+            $value = mb_convert_encoding( $value, 'UTF-8', 'UTF-8' );
+        }
+
+        return mb_substr( trim( $value ), 0, 1000 );
     }
 
     /**
