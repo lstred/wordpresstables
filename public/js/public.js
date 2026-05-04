@@ -183,6 +183,10 @@
             TUM.renderTable(tableId);
         } else {
             $panel.find('.tum-no-data').show();
+            // Auto-open the upload zone when there is no data yet
+            if (data.can_edit) {
+                $panel.find('.tum-upload-section').show();
+            }
         }
 
         // Formatting sidebar preload
