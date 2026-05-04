@@ -1,0 +1,159 @@
+/* ============================================================
+   Table Upload Manager — Admin Styles
+   Scoped to #tum-admin to avoid conflicts
+   ============================================================ */
+
+#tum-admin {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, sans-serif;
+}
+
+/* ── Heading ─────────────────────────────────────────────── */
+.tum-admin-heading {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    color: #1e3a5f;
+    font-size: 1.5rem;
+    margin-bottom: 24px;
+    padding-bottom: 16px;
+    border-bottom: 2px solid #e5e7eb;
+}
+.tum-admin-heading .dashicons {
+    font-size: 28px;
+    width: 28px;
+    height: 28px;
+    color: #2563eb;
+}
+
+/* ── Stat cards ──────────────────────────────────────────── */
+.tum-stat-cards {
+    display: flex;
+    gap: 20px;
+    flex-wrap: wrap;
+    margin-bottom: 32px;
+}
+.tum-stat-card {
+    background: #fff;
+    border: 1px solid #e5e7eb;
+    border-radius: 12px;
+    padding: 24px 28px;
+    flex: 1;
+    min-width: 180px;
+    box-shadow: 0 1px 4px rgba(0,0,0,.05);
+    text-align: center;
+    transition: box-shadow .2s;
+}
+.tum-stat-card:hover {
+    box-shadow: 0 4px 12px rgba(0,0,0,.1);
+}
+.tum-stat-icon.dashicons {
+    font-size: 36px;
+    width: 36px;
+    height: 36px;
+    color: #2563eb;
+    margin-bottom: 8px;
+}
+.tum-stat-value {
+    font-size: 2.4rem;
+    font-weight: 700;
+    color: #1e3a5f;
+    line-height: 1;
+    margin-bottom: 4px;
+}
+.tum-stat-label {
+    font-size: .85rem;
+    color: #6b7280;
+    text-transform: uppercase;
+    letter-spacing: .05em;
+}
+
+/* ── Quick links ─────────────────────────────────────────── */
+.tum-quick-links {
+    background: #f8fafc;
+    border: 1px solid #e5e7eb;
+    border-radius: 10px;
+    padding: 20px 24px;
+    margin-bottom: 24px;
+}
+.tum-quick-links h2 {
+    margin-top: 0;
+    font-size: 1rem;
+    color: #374151;
+}
+.tum-quick-links .button {
+    margin-right: 10px;
+}
+
+/* ── Shortcode box ───────────────────────────────────────── */
+.tum-shortcode-box {
+    background: #eff6ff;
+    border: 1px solid #bfdbfe;
+    border-radius: 10px;
+    padding: 20px 24px;
+    margin-bottom: 24px;
+}
+.tum-shortcode-box h2 {
+    margin-top: 0;
+    color: #1e40af;
+}
+.tum-shortcode-code {
+    display: inline-block;
+    background: #fff;
+    border: 1px solid #93c5fd;
+    border-radius: 6px;
+    padding: 6px 14px;
+    font-size: 1rem;
+    color: #1e40af;
+    margin-right: 12px;
+    user-select: all;
+}
+.tum-copy-shortcode {
+    vertical-align: middle;
+}
+
+/* ── Admin table overrides ───────────────────────────────── */
+.tum-admin-table th {
+    font-weight: 600;
+    background: #f8fafc;
+}
+.tum-admin-table td {
+    vertical-align: middle;
+}
+
+/* ── Badges ──────────────────────────────────────────────── */
+.tum-badge {
+    display: inline-block;
+    padding: 3px 10px;
+    border-radius: 20px;
+    font-size: .78rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: .04em;
+}
+.tum-badge-approved  { background: #d1fae5; color: #065f46; }
+.tum-badge-pending   { background: #fef3c7; color: #92400e; }
+.tum-badge-admin     { background: #ede9fe; color: #4c1d95; }
+.tum-badge-user      { background: #e0f2fe; color: #075985; }
+
+/* ── User filter ─────────────────────────────────────────── */
+.tum-user-search-wrap {
+    margin: 16px 0;
+}
+
+/* ── Empty state ─────────────────────────────────────────── */
+.tum-empty-state {
+    text-align: center;
+    padding: 48px;
+    color: #9ca3af;
+}
+.tum-empty-state .dashicons {
+    font-size: 48px;
+    width: 48px;
+    height: 48px;
+    margin-bottom: 12px;
+}
+.tum-empty-state p {
+    font-size: 1rem;
+}
+
+.tum-na { color: #9ca3af; }
